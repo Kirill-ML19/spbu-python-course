@@ -40,22 +40,17 @@ class ThreadPool:
         Continuously checks for new tasks until a stop signal is received.
         """
         while not self.stop_signal.is_set():
-            task: Optional[Callable] = None
-            args: Optional[Tuple[Any, ...]] = None
-            kwargs: Optional[dict[str, Any]] = None
-            result_wrapper: Optional["ResultWrapper"] = None
-
+            flag: bool = False
             with self.lock:
                 if self.tasks:
-                    task, args, kwargs, result_wrapper = self.tasks.pop(0)
-
-            if task:
-                try:
-                    result = task(*args, **kwargs)
-                    result_wrapper.set_result(result)
-                except Exception as e:
-                    result_wrapper.set_error(e)
-            else:
+                    flag = True
+                    task = self.tasks.pop(0)
+                    try:
+                        result = task[0](*task[1], **task[2])
+                        task[3].set_result(result)
+                    except Exception as e:
+                        task[3].set_error(e)
+            if not flag:
                 threading.Event().wait(0.1)  # Sleep a little to avoid busy-waiting
 
     def enqueue(self, task: Callable, *args: Any, **kwargs: Any) -> "ResultWrapper":
