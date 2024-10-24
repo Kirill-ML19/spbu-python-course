@@ -1,5 +1,5 @@
 import threading
-from typing import Callable, Any, Tuple, Optional
+from typing import Callable, Any, Tuple, Optional, List, Dict
 
 
 class ThreadPool:
@@ -21,11 +21,11 @@ class ThreadPool:
         Args:
             num_threads (int): Number of threads to create in the pool.
         """
-        self.tasks: list[
-            Tuple[Callable, Tuple[Any, ...], dict[str, Any], "ResultWrapper"]
+        self.tasks: List[
+            Tuple[Callable, Tuple[Any, ...], Dict[str, Any], "ResultWrapper"]
         ] = []
         self.lock = threading.Lock()
-        self.threads: list[threading.Thread] = []
+        self.threads: List[threading.Thread] = []
         self.num_threads = num_threads
         self.stop_signal = threading.Event()
 
