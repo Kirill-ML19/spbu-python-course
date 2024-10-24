@@ -1,5 +1,5 @@
 import pytest
-from project.thread_pool.thread_pool import ThreadPool, ResultWrapper
+from project.thread_pool.thread_pool import ThreadPool
 
 
 def test_task_addition():
