@@ -1,4 +1,5 @@
 import pytest
+import time
 from project.thread_pool.thread_pool import ThreadPool
 
 
@@ -40,8 +41,6 @@ def test_exception_handling():
 
 
 def test_delayed_result():
-    import time
-
     def delayed_task():
         time.sleep(1)
         return "done"
@@ -54,8 +53,6 @@ def test_delayed_result():
 
 
 def test_concurrent_tasks():
-    import time
-
     def quick_task(n):
         time.sleep(0.1)
         return n
@@ -66,4 +63,13 @@ def test_concurrent_tasks():
     assert all(
         res.result(timeout=1) == i for i, res in enumerate(results)
     ), "Each task should return its respective input"
+    pool.dispose()
+
+
+def test_thread_pool_size():
+    num_threads = 3
+    pool = ThreadPool(num_threads)
+    assert len(pool.threads) == num_threads
+    for thread in pool.threads:
+        assert thread.is_alive()
     pool.dispose()
