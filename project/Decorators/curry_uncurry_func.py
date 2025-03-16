@@ -73,12 +73,12 @@ def uncurry_explicit(function: Callable, arity: int) -> Callable:
     if arity == 0:
         return lambda: function()
 
-    temp_function= function 
+    temp_function = function
     for _ in range(arity):
         if not callable(temp_function):
             raise TypeError("The provided function is not fully curried.")
         try:
-            temp_function=temp_function(0)
+            temp_function = temp_function(0)
         except TypeError:
             raise TypeError("The provided function is not fully curried.")
 
@@ -91,4 +91,5 @@ def uncurry_explicit(function: Callable, arity: int) -> Callable:
                 raise TypeError("The provided function is not fully curried.")
             result = result(arg)
         return result
+
     return inner_uncurry
