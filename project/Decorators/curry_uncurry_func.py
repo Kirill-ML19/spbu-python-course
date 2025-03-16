@@ -43,7 +43,7 @@ def curry_explicit(function: Callable, arity: int) -> Callable:
     return inner_curry(())
 
 
-def uncurry_exlicit(function: Callable, arity: int) -> Callable:
+def uncurry_explicit(function: Callable, arity: int) -> Callable:
     """
     Transforms a function into its curried version with a specified arity.
 
@@ -71,7 +71,16 @@ def uncurry_exlicit(function: Callable, arity: int) -> Callable:
     if arity < 0:
         raise ValueError("Arity must be a positive integer.")
     if arity == 0:
-        return lambda: function
+        return lambda: function()
+
+    temp_function= function 
+    for _ in range(arity):
+        if not callable(temp_function):
+            raise TypeError("The provided function is not fully curried.")
+        try:
+            temp_function=temp_function(0)
+        except TypeError:
+            raise TypeError("The provided function is not fully curried.")
 
     def inner_uncurry(*args: Any) -> Any:
         if len(args) != arity:
@@ -82,5 +91,4 @@ def uncurry_exlicit(function: Callable, arity: int) -> Callable:
                 raise TypeError("The provided function is not fully curried.")
             result = result(arg)
         return result
-
     return inner_uncurry
