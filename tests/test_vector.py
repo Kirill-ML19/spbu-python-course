@@ -2,8 +2,8 @@ import math
 import pytest
 from project.vector_and_matrix.vector import (
     dot_product,
-    vector_length,  
-    angle_between_vectors,  
+    vector_length,
+    angle_between_vectors,
 )
 
 
@@ -38,9 +38,7 @@ def test_vector_length():
     "vec1, vec2, expected_angle",
     [
         ([1, 0], [0, 1], math.pi / 2),
-
         ([1, 0], [2, 0], 0.0),
-
         ([1, 2, 3], [4, 5, 6], math.acos(32 / (math.sqrt(14) * math.sqrt(77)))),
     ],
 )

@@ -2,8 +2,7 @@ import math
 from typing import List
 
 
-def dot_product(vec1 : List[float] ,vec2: List[float] ):
-    
+def dot_product(vec1: List[float], vec2: List[float]):
     """
     Calculates the dot product of two vectors.
 
@@ -24,7 +23,6 @@ def dot_product(vec1 : List[float] ,vec2: List[float] ):
 
 
 def vector_length(vec: List[float]) -> float:
-    
     """
     Calculates the length (magnitude) of a vector.
 
@@ -38,8 +36,7 @@ def vector_length(vec: List[float]) -> float:
     return math.sqrt(sum(x**2 for x in vec))
 
 
-def angle_between_vectors(vec1: List[float] , vec2: List[float]) -> float:
-    
+def angle_between_vectors(vec1: List[float], vec2: List[float]) -> float:
     """
     Calculates the angle between two vectors in radians.
 
@@ -57,6 +54,6 @@ def angle_between_vectors(vec1: List[float] , vec2: List[float]) -> float:
     dot = dot_product(vec1, vec2)
     len1 = vector_length(vec1)
     len2 = vector_length(vec2)
-    if len1==0 or len2==0:
+    if len1 == 0 or len2 == 0:
         raise ValueError("Vectors must not have zero length")
     return math.acos(dot / (len1 * len2))
