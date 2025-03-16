@@ -2,41 +2,60 @@ import math
 import pytest
 from project.vector_and_matrix.vector import (
     dot_product,
-    vector_lenght,
-    angle_betweeen_vectors,
+    vector_length,  
+    angle_between_vectors,  
 )
 
 
 def test_dot_product():
+    """
+    Testing the dot_product function.
+    Checks the correctness of the calculation of the scalar product.
+    """
     assert dot_product([1, 2, 3], [4, 5, 6]) == 32
+
     assert dot_product([1.5, 2.5], [3.0, 4.0]) == 14.5
+
     assert dot_product([0, 0], [0, 0]) == 0
+
     with pytest.raises(ValueError):
         dot_product([1, 2], [2, 3, 6])
 
 
-def test_vector_lenght():
-    assert vector_lenght([3, 4]) == 5.0
-    assert vector_lenght([0, 0, 0]) == 0.0
-    assert math.isclose(vector_lenght([1.0, 1.0]), math.sqrt(2))
+def test_vector_length():
+    """
+    Testing the vector_length function.
+    Checks the correctness of the vector length calculation.
+    """
+    assert vector_length([3, 4]) == 5.0
+
+    assert vector_length([0, 0, 0]) == 0.0
+
+    assert math.isclose(vector_length([1.0, 1.0]), math.sqrt(2))
 
 
-def test_angle_between_vectors():
-    vec1 = [1, 0]
-    vec2 = [0, 1]
-    assert math.isclose(angle_betweeen_vectors(vec1, vec2), math.pi / 2)
+@pytest.mark.parametrize(
+    "vec1, vec2, expected_angle",
+    [
+        ([1, 0], [0, 1], math.pi / 2),
 
-    vec1 = [1, 0]
-    vec2 = [2, 0]
-    assert math.isclose(angle_betweeen_vectors(vec1, vec2), 0.0)
+        ([1, 0], [2, 0], 0.0),
 
-    vec1 = [1, 2, 3]
-    vec2 = [4, 5, 6]
-    dot = dot_product(vec1, vec2)
-    len1 = vector_lenght(vec1)
-    len2 = vector_lenght(vec2)
-    angle = math.acos(dot / (len1 * len2))
-    assert math.isclose(angle_betweeen_vectors(vec1, vec2), angle)
+        ([1, 2, 3], [4, 5, 6], math.acos(32 / (math.sqrt(14) * math.sqrt(77)))),
+    ],
+)
+def test_angle_between_vectors(vec1, vec2, expected_angle):
+    """
+    Testing the angle_between_vectors function.
+    Checks whether the angle between vectors is calculated correctly.
+    """
+    assert math.isclose(angle_between_vectors(vec1, vec2), expected_angle)
 
+
+def test_angle_between_vectors_raises_value_error():
+    """
+    Testing the angle_between_vectors function for throwing an exception.
+    Checks that the function raises ValueError for different vector lengths.
+    """
     with pytest.raises(ValueError):
-        angle_betweeen_vectors([1, 2], [2, 4, 7])
+        angle_between_vectors([1, 2], [2, 4, 7])
