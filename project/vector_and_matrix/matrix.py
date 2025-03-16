@@ -1,7 +1,9 @@
 from typing import List, Union
 
 
-def matrix_addition(mat1: List[List[float]] ,mat2: List[List[float]])->List[List[float]]:
+def matrix_addition(
+    mat1: List[List[float]], mat2: List[List[float]]
+) -> List[List[float]]:
     """
     Adds two matrices element-wise.
 
@@ -20,10 +22,13 @@ def matrix_addition(mat1: List[List[float]] ,mat2: List[List[float]])->List[List
     if len(mat1) != len(mat2) or len(mat1[0]) != len(mat2[0]):
         raise ValueError("The matrices must be the same size")
     return [
-        [mat1[i][j]+mat2[i][j] for j in range(len(mat1[0]))] for i in range(len(mat1))
+        [mat1[i][j] + mat2[i][j] for j in range(len(mat1[0]))] for i in range(len(mat1))
     ]
 
-def matrix_multiplication(mat1: List[List[float]] , mat2: List[List[float]])->List[List[float]]:
+
+def matrix_multiplication(
+    mat1: List[List[float]], mat2: List[List[float]]
+) -> List[List[float]]:
     """
     Multiplies two matrices.
 
@@ -41,7 +46,9 @@ def matrix_multiplication(mat1: List[List[float]] , mat2: List[List[float]])->Li
     if not mat1 or not mat2:
         raise ValueError("Matrices must not be empty")
     if len(mat1[0]) != len(mat2):
-        raise ValueError("The number of columns in the first matrix and rows in the second matrix must be the same")
+        raise ValueError(
+            "The number of columns in the first matrix and rows in the second matrix must be the same"
+        )
     result: List[List[float]] = [
         [0 for _ in range(len(mat2[0]))] for _ in range(len(mat1))
     ]
@@ -52,7 +59,7 @@ def matrix_multiplication(mat1: List[List[float]] , mat2: List[List[float]])->Li
     return result
 
 
-def matrix_transpose(mat: List[List[float]])->List[List[float]]:
+def matrix_transpose(mat: List[List[float]]) -> List[List[float]]:
     """
     Transposes a matrix (swaps rows and columns).
 
