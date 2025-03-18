@@ -15,10 +15,10 @@ def test_cached_decorator():
         return a + b
 
     assert add(1, 2) == 3
-    assert call_count == 1 
+    assert call_count == 1
 
     assert add(1, 2) == 3
-    assert call_count == 1  
+    assert call_count == 1
 
 
 def test_cached_max_size():
@@ -40,10 +40,10 @@ def test_cached_max_size():
     assert call_count == 2
 
     assert add(3, 4) == 7
-    assert call_count == 3  
+    assert call_count == 3
 
     assert add(1, 2) == 3
-    assert call_count == 4  
+    assert call_count == 4
 
 
 def test_cached_with_kwargs():
@@ -61,7 +61,7 @@ def test_cached_with_kwargs():
     assert multiply(a=2, b=3) == 6
     assert call_count == 1
 
-    assert multiply(a=2, b=3) == 6  
+    assert multiply(a=2, b=3) == 6
     assert call_count == 1
 
 
@@ -80,12 +80,12 @@ def test_cached_with_different_types():
     assert concat(1, 2) == "12"
     assert concat("a", "b") == "ab"
     assert concat(1.5, 2.5) == "1.52.5"
-    assert call_count == 3  
+    assert call_count == 3
 
     assert concat(1, 2) == "12"
     assert concat("a", "b") == "ab"
     assert concat(1.5, 2.5) == "1.52.5"
-    assert call_count == 3  
+    assert call_count == 3
 
 
 def test_cached_no_max_size():
@@ -103,12 +103,12 @@ def test_cached_no_max_size():
     assert subtract(5, 3) == 2
     assert subtract(10, 4) == 6
     assert subtract(7, 2) == 5
-    assert call_count == 3  
+    assert call_count == 3
 
     assert subtract(5, 3) == 2
     assert subtract(10, 4) == 6
     assert subtract(7, 2) == 5
-    assert call_count == 3  
+    assert call_count == 3
 
 
 def test_cached_no_args():
@@ -126,5 +126,5 @@ def test_cached_no_args():
     assert get_value() == 42
     assert call_count == 1
 
-    assert get_value() == 42  
-    assert call_count == 1  
+    assert get_value() == 42
+    assert call_count == 1
