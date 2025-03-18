@@ -24,13 +24,15 @@ def cached(max_size=None):
 
         @wraps(func)
         def wrapper(*args, **kwargs):
-            key = (args, tuple(sorted(kwargs.items())))
+            key = (args, frozenset(kwargs.items()))
             if key in cache:
                 return cache[key]
             result = func(*args, **kwargs)
             if max_size is not None:
                 if len(cache) >= max_size:
                     cache.popitem(last=False)
+                cache[key] = result
+            else:
                 cache[key] = result
             return result
 
