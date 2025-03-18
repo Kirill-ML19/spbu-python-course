@@ -83,3 +83,20 @@ def test_combination_evaluated_isolated():
         @smart_args
         def invalid_func(x=Evaluated(lambda: Isolated())):
             return x
+
+
+def test_isolated_not_modified():
+    """
+    Tests in which isolated arguments remain unchanged even if they are changed inside the function.
+    """
+
+    def modify_dict(d):
+        d["new_key"] = "new_value"
+
+    config = {"key": "value"}
+
+    result = example_func(a=10, c=config)
+    modify_dict(result[2])
+
+    new_result = example_func(a=20, c=config)
+    assert "new_key" not in new_result[2], "Isolated argument was modified"
