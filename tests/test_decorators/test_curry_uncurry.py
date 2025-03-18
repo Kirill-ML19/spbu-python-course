@@ -65,31 +65,34 @@ def test_curry_explicit_too_many_args():
     with pytest.raises(TypeError):
         curried_func(1)(2)(3)
 
+
 def test_curry_explicit_multiple_args_error():
     """
     Check if multiple arguments passed simultaneously to a curried function cause an error.
     """
-    def add(a,b):
-        return a+b
-    
-    curried_add = curry_explicit(add,2)
+
+    def add(a, b):
+        return a + b
+
+    curried_add = curry_explicit(add, 2)
     with pytest.raises(TypeError):
-        curried_add(1,2)
+        curried_add(1, 2)
 
 
 def test_curry_explicit_built_in_function_sum():
     """
     Check currying of built-in function sum.
     """
-    curried_sum = curry_explicit(sum,1)
-    assert curried_sum([1,2,3])==6
+    curried_sum = curry_explicit(sum, 1)
+    assert curried_sum([1, 2, 3]) == 6
+
 
 def test_curry_explicit_built_in_function_len():
     """
     Check currying of built-in function len
     """
-    curried_len = curry_explicit(len,1)
-    assert curried_len([1,2,3,4])==4
+    curried_len = curry_explicit(len, 1)
+    assert curried_len([1, 2, 3, 4]) == 4
 
 
 # test for uncurry_explicit
