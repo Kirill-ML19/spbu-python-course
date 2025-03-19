@@ -1,7 +1,7 @@
-from typing import Generator, Tuple, List
+from typing import Generator, List, Callable
 
 
-def prine_generator() -> Generator[int, None, None]:
+def prime_generator() -> Generator[int, None, None]:
     """
     Prime number sequence generator function.
 
@@ -17,7 +17,7 @@ def prine_generator() -> Generator[int, None, None]:
         num += 1
 
 
-def prime_decorator(generator_func):
+def prime_decorator(generator_func: Callable[[], Generator[int, None, None]]):
     """
     Decorator that takes a generator and returns a function that returns the k-th prime number (starting from 1).
 
@@ -27,14 +27,22 @@ def prime_decorator(generator_func):
     Returns:
         Callable[[int], int]: A function that takes an element index and returns a prime number.
     """
-    primes_cache = []
+    primes_cache: List[int] = []
+    gen = generator_func()
+    last_k = 0
 
     def wrapper(k: int) -> int:
-        nonlocal primes_cache
+        nonlocal last_k
         if k < 1:
             raise ValueError("Index must be greater than or equal to 1")
+        if k < last_k:
+            raise ValueError(
+                "Can not request numbers with an index less than the one already calculated."
+            )
         while len(primes_cache) < k:
-            primes_cache.append(next(generator_func()))
+            primes_cache.append(next(gen))
+
+        last_k = k
         return primes_cache[k - 1]
 
     return wrapper
@@ -48,4 +56,4 @@ def get_prime():
     Returns:
         int: The prime number at the given index.
     """
-    return prime_decorator()
+    return prime_generator()
