@@ -55,7 +55,7 @@ def merge(left: Optional[TreapNode], right: Optional[TreapNode]) -> Optional[Tre
         return right
 
 
-class Treap(MutableMapping[int, Any]):
+class Treap(MutableMapping):
     """Treap (Cartesian Tree) implementing the MutableMapping interface.
 
     Supports dict-like behavior with additional heap property for balancing.
